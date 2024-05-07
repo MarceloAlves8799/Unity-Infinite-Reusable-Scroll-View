@@ -192,7 +192,19 @@ MonoBehaviour:
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 96749961}
+        m_TargetAssemblyTypeName: InfiniteReusableScrollView, Assembly-CSharp
+        m_MethodName: GenerateElementsScroll
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &69945480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +296,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _elementPrefabRectTransform: {fileID: 6738014862005471618, guid: 87c233b379ef93d4182273f33a059266, type: 3}
   _dbElementName: {fileID: 11400000, guid: 0287317b74c351543b79c5993046fb7c, type: 2}
+  isLoading: 0
+  scrollThreshold: 0.95
+  visibleElementsAmount: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

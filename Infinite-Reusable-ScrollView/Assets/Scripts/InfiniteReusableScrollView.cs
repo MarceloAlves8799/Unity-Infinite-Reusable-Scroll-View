@@ -1,6 +1,8 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.VisualScripting.Metadata;
 
 public class InfiniteReusableScrollView : MonoBehaviour
 {
@@ -15,6 +17,10 @@ public class InfiniteReusableScrollView : MonoBehaviour
 
     private ObjectPool _scrollViewElementPool;
 
+    [Header("Settings")]
+    public bool isLoading;
+    public float scrollThreshold = 0.95f;
+    public int visibleElementsAmount;
 
 
     private void Awake()
@@ -42,26 +48,39 @@ public class InfiniteReusableScrollView : MonoBehaviour
 
     private void Start()
     {
-        int initialElementsAmount = Mathf.CeilToInt(_viewport.rect.height / (_elementPrefabRectTransform.sizeDelta.y + _layoutGroup.spacing));
+        visibleElementsAmount = Mathf.CeilToInt(_viewport.rect.height / (_elementPrefabRectTransform.sizeDelta.y + _layoutGroup.spacing));
 
-        PopulateScrollView(initialElementsAmount);
+        PopulateScrollView(visibleElementsAmount);
     }
 
     private void PopulateScrollView(int amount)
     {
         TMP_Text elementTMP = null;
+        isLoading = true;
 
         for (int i = 0; i < amount; i++)
         {
             GameObject elementInstance = _scrollViewElementPool.GetObjectFromPool();
 
             elementInstance.transform.SetParent(_content);
-            elementInstance.transform.SetAsFirstSibling();
+            elementInstance.transform.SetAsLastSibling();
 
             elementTMP = elementInstance.GetComponentInChildren<TMP_Text>();
 
             if (elementTMP != null)
                 elementTMP.SetText(_dbElementName.GetNameFromDatabase());
+        }
+
+        isLoading = false;
+    }
+
+    public void GenerateElementsScroll(Vector2 scrollPosition)
+    {
+        if (isLoading) return;
+        
+        if (_scrollRect.verticalNormalizedPosition <= 1 - scrollThreshold)
+        {
+            PopulateScrollView(visibleElementsAmount);
         }
     }
 }

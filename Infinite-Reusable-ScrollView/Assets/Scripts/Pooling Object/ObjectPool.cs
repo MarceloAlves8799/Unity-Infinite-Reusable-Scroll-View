@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class ObjectPool : MonoBehaviour
 {
@@ -58,6 +56,7 @@ public class ObjectPool : MonoBehaviour
         }
 
         obj.SetActive(false);
+        obj.transform.SetParent(transform);
 
         if (obj.TryGetComponent<IPoolable>(out IPoolable poolObj))
         {
