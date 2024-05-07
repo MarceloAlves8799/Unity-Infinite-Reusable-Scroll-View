@@ -253,6 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 96749960}
   - component: {fileID: 96749961}
+  - component: {fileID: 96749962}
   m_Layer: 5
   m_Name: Infinite Reusable Scroll View
   m_TagString: Untagged
@@ -297,8 +298,24 @@ MonoBehaviour:
   _elementPrefabRectTransform: {fileID: 6738014862005471618, guid: 87c233b379ef93d4182273f33a059266, type: 3}
   _dbElementName: {fileID: 11400000, guid: 0287317b74c351543b79c5993046fb7c, type: 2}
   isLoading: 0
+  isSendingToPool: 0
   scrollThreshold: 0.95
   visibleElementsAmount: 0
+  disableOffset: 200
+  timeToGenerate: 0.1
+--- !u!114 &96749962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96749959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a3e69b3697a9342ae6fc9048bdfd5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <VisibleElementCount>k__BackingField: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +565,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 1
+  m_ChildAlignment: 4
   m_Spacing: 30
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -583,6 +600,7 @@ GameObject:
   - component: {fileID: 1597954595}
   - component: {fileID: 1597954594}
   - component: {fileID: 1597954593}
+  - component: {fileID: 1597954596}
   m_Layer: 5
   m_Name: Viewport
   m_TagString: Untagged
@@ -662,6 +680,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1597954591}
   m_CullTransparentMesh: 1
+--- !u!114 &1597954596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597954591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 40, z: 0, w: 40}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &1726491890
 GameObject:
   m_ObjectHideFlags: 0
