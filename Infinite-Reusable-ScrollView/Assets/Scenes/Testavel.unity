@@ -283,6 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _elementPrefabRectTransform: {fileID: 6738014862005471618, guid: 87c233b379ef93d4182273f33a059266, type: 3}
+  _dbElementName: {fileID: 11400000, guid: 0287317b74c351543b79c5993046fb7c, type: 2}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
