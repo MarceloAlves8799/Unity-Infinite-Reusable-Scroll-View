@@ -9,7 +9,7 @@ public class DatabaseSO : ScriptableObject, ISerializationCallbackReceiver
     [SerializeField] private string runOutElementsMessage = "You run out the elements name!";
 
     [Header("Stored names")]
-    [SerializeField] private List<string> _elementNames;
+    [SerializeField] private List<string> _elementNames = new List<string>();
     private int _index;
 
     
@@ -39,7 +39,7 @@ public class DatabaseSO : ScriptableObject, ISerializationCallbackReceiver
 
         for (int i = 0; i < amountNamesToGenerate; i++)
         {
-            _elementNames[i] = elementName + (i + 1).ToString();
+            _elementNames.Add(elementName + (i + 1).ToString());
         }
     }
 

@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9578d00279e754040afd87e9b648aa90, type: 3}
   m_Name: Database Element Name
   m_EditorClassIdentifier: 
-  elementNames:
+  databaseEmptyMessage: Database Element Empty
+  runOutElementsMessage: You run out the elements name!
+  _elementNames:
   - Element 1
   - Element 2
   - Element 3
@@ -10013,4 +10015,3 @@ MonoBehaviour:
   - Element 9998
   - Element 9999
   - Element 10000
-  currentNumber: 0
