@@ -51,7 +51,18 @@ Você pode acompanhar todo o processo de commits do projeto, com descrições da
 # Conclusão
 Ao concluir as etapas acima, você pode clicar em Play e o Scroll View vai ser populado com uma quantidade de elementos que varia da altura da sua tela, podendo ser scrollado infinitamente e quando no topo da lista é ativado a função Pull to Request.
 
+# Relatório de otimização
+O objetivo deste projeto foi otimizar um ScrollView infinito em Unity, garantindo uma taxa de quadros (FPS) consistente em dispositivos móveis e WebGL. Para isso, foi utilizada a técnica de Pooling de Objetos para gerenciar eficientemente os elementos instanciados no ScrollView, evitando a instanciação dinâmica de acordo com o número de elementos e reduzindo a sobrecarga de processamento.
 
+A implementação do sistema de Object Pool foi realizada criando um número inicial de elementos, sendo o triplo do tamanho da tela, para garantir espaço suficiente para o jogador rolar sem perceber a substituição dos elementos. Conforme o jogador rola para cima ou para baixo, os objetos que saem da tela são desativados, enquanto os próximos elementos a serem exibidos são ativados.
+
+A desativação de elementos não utilizados fora da tela contribui para a eficiência do processamento, pois esses elementos não consomem recursos de renderização ou atualização. Isso resulta em uma experiência de rolagem suave e responsiva, sem perda de FPS ou interrupções na responsividade do scroll.
+
+O teste realizado alcançou valores acima de 10.000 elementos no ScrollView sem perda de FPS, mantendo uma taxa de 60 fps em dispositivos móveis. A implementação bem-sucedida do Object Pool contribuiu significativamente para a otimização do ScrollView e a melhoria da experiência do usuário. O uso eficiente do Object Pool demonstrou ser uma estratégia eficaz para otimizar o ScrollView em Unity, garantindo uma performance estável em dispositivos móveis e WebGL.
+
+![image](https://github.com/MarceloAlves8799/Unity-Infinite-Reusable-Scroll-View/assets/48249122/546ff175-849f-4e5c-8299-735fcaf8f7b9)
+
+![image](https://github.com/MarceloAlves8799/Unity-Infinite-Reusable-Scroll-View/assets/48249122/6a0a5f38-2b7b-4a37-bde1-71793541266d)
 
 
 
