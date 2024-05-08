@@ -192,19 +192,7 @@ MonoBehaviour:
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 96749961}
-        m_TargetAssemblyTypeName: InfiniteReusableScrollView, Assembly-CSharp
-        m_MethodName: GenerateElementsScroll
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &69945480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,19 +284,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8ffac8c43653b4aa223bcb9a099a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _elementPrefabRectTransform: {fileID: 6738014862005471618, guid: 87c233b379ef93d4182273f33a059266, type: 3}
   _dbElementName: {fileID: 11400000, guid: 0287317b74c351543b79c5993046fb7c, type: 2}
-  pullToRequestAnimator: {fileID: 1787491248}
-  isLoading: 0
-  isSendingToPool: 0
-  isPullingElements: 0
-  scrollThreshold: 0.95
-  visibleElementsAmount: 0
-  disableOffset: 200
-  timeToGenerate: 0.1
-  contentPositionToStop: {x: 0, y: 0}
-  contentInitialPosition: 0
-  distanceFromTop: 100
+  _elementPrefabRectTransform: {fileID: 6738014862005471618, guid: 87c233b379ef93d4182273f33a059266, type: 3}
+  _scrollThreshold: 0.95
+  _disableOffset: 200
+  _generationTime: 0.1
+  _pullToRefreshAnimator: {fileID: 1787491248}
+  _distanceFromTop: 100
 --- !u!114 &96749962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,7 +839,7 @@ GameObject:
   - component: {fileID: 1787491246}
   - component: {fileID: 1787491248}
   m_Layer: 5
-  m_Name: PullToRequest Feedback
+  m_Name: PullToRefresh Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -930,7 +912,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787491244}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 25cde06ab261dbf468173b459cc6627a, type: 2}
   m_CullingMode: 0

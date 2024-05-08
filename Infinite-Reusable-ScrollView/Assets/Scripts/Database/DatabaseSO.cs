@@ -4,38 +4,46 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Database", menuName = "Scriptable Objects/Database", order = 1)]
 public class DatabaseSO : ScriptableObject, ISerializationCallbackReceiver
 {
-    [SerializeField] private List<string> elementNames;
-    [SerializeField] private int index;
+    [Header("Messages")]
+    [SerializeField] private string databaseEmptyMessage = "Database Element Empty";
+    [SerializeField] private string runOutElementsMessage = "You run out the elements name!";
 
+    [Header("Stored names")]
+    [SerializeField] private List<string> _elementNames;
+    private int _index;
+
+    
     public string GetNameFromDatabase()
     {
         if (HasElementNamesEmpty())
-            return "Database Element Empty";
+            return databaseEmptyMessage;
 
-        if (index >= elementNames.Count)
-            return "Over pass 10.000 element name!";
+        if (_index >= _elementNames.Count)
+            return runOutElementsMessage;
 
-        return elementNames[index++];
+        return _elementNames[_index++];
     }
 
     public bool HasElementNamesEmpty()
     {
-        return elementNames.Count == 0;
+        return _elementNames.Count == 0;
     }
 
     [ContextMenu("Generate Database")]
-    private void GenerateElementNames()
+    private void BasicElementNamesGenerator()
     {
         int amountNamesToGenerate = 10000;
         string elementName = "Element ";
 
-        elementNames = new List<string>(amountNamesToGenerate);
+        _elementNames = new List<string>(amountNamesToGenerate);
 
         for (int i = 0; i < amountNamesToGenerate; i++)
         {
-            elementNames[i] = elementName + (i + 1).ToString();
+            _elementNames[i] = elementName + (i + 1).ToString();
         }
     }
+
+    #region ISerializationCallbackReceiver Methods
 
     public void OnBeforeSerialize()
     {
@@ -44,6 +52,8 @@ public class DatabaseSO : ScriptableObject, ISerializationCallbackReceiver
 
     public void OnAfterDeserialize()
     {
-        index = 0;
+        _index = 0;
     }
+
+    #endregion
 }

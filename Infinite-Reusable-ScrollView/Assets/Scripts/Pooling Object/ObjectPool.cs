@@ -19,6 +19,7 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+    // Method responsible for Instantiate elements to Pool
     private void AddObjectToPool()
     {
         GameObject prefabInstance = Instantiate(_prefabToInstantiate, transform);
@@ -30,6 +31,7 @@ public class ObjectPool : MonoBehaviour
         _objectPool.Enqueue(prefabInstance);
     }
 
+    // Method to be called when need some Prefab instance
     public GameObject GetObjectFromPool()
     {
         if (_objectPool.Count == 0)
@@ -48,6 +50,7 @@ public class ObjectPool : MonoBehaviour
         return obj;
     }
 
+    // Method to be called when need to disable Prefab
     public void ReturnObjectToPool(GameObject obj)
     {
         if (obj == null)
@@ -55,7 +58,6 @@ public class ObjectPool : MonoBehaviour
             return;
         }
 
-        obj.SetActive(false);
         obj.transform.SetParent(transform);
 
         if (obj.TryGetComponent<IPoolable>(out IPoolable poolObj))

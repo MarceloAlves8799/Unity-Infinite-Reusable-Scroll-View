@@ -6,7 +6,7 @@ using UnityEngine;
 public class HandleScrollViewElement : MonoBehaviour
 {
     [field: SerializeField] public int VisibleElementCount { get; private set; }
-
+    
 
     public void HandleElementCount(int value)
     {
