@@ -5,7 +5,7 @@ public class ObjectPool : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject _prefabToInstantiate;
-    [SerializeField] private int _initialPoolSize;
+    [SerializeField] private int _initialPoolSize = 10;
 
     private Queue<GameObject> _objectPool = new Queue<GameObject>();
 

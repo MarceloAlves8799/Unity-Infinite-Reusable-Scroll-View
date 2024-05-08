@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class PullToRefreshHandler : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private ScrollRect _scrollRect;
     [SerializeField] private Animator _pullToRefreshAnimator;
 
     private InfiniteReusableScrollView _infiniteScrollView;
+    private ScrollRect _scrollRect;
     private RectTransform _content;
 
     [Header("Settings")]
@@ -22,10 +22,13 @@ public class PullToRefreshHandler : MonoBehaviour
 
     private void Awake()
     {
-        if(_scrollRect != null)
-            _content = _scrollRect.content;
-
         _infiniteScrollView = GetComponent<InfiniteReusableScrollView>();
+
+        if(_infiniteScrollView != null)
+        {
+            _scrollRect = _infiniteScrollView.ScrollRect;
+            _content = _scrollRect.content;
+        }
     }
 
     private void OnEnable()

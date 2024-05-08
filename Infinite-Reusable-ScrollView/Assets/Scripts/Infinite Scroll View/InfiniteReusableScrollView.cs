@@ -11,6 +11,7 @@ public class InfiniteReusableScrollView : MonoBehaviour
 
     // Scroll View References
     private ScrollRect _scrollRect;
+    public ScrollRect ScrollRect { get { return _scrollRect; } }
     private RectTransform _viewport;
     private RectTransform _content;
     private HorizontalOrVerticalLayoutGroup _layoutGroup;
