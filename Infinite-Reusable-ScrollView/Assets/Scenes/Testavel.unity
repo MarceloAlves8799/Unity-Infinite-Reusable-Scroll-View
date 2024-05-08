@@ -287,8 +287,9 @@ MonoBehaviour:
   _dbElementName: {fileID: 11400000, guid: 0287317b74c351543b79c5993046fb7c, type: 2}
   _elementPrefabRectTransform: {fileID: 6738014862005471618, guid: 87c233b379ef93d4182273f33a059266, type: 3}
   _scrollThreshold: 0.95
-  _disableOffset: 200
   _generationTime: 0.1
+  _disableOffset: 200
+  _minAmountToStartDisable: 20
 --- !u!114 &96749963
 MonoBehaviour:
   m_ObjectHideFlags: 0

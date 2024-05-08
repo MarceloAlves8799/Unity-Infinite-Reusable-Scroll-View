@@ -23,14 +23,21 @@ public class InfiniteReusableScrollView : MonoBehaviour
 
     [Header("Generate Elements")]
     [SerializeField] private RectTransform _elementPrefabRectTransform;
-    [SerializeField] private float _scrollThreshold;
-    [SerializeField] private float _disableOffset;
-    [SerializeField] private float _generationTime;
+    [SerializeField] private float _scrollThreshold = 0.95f;
+    [SerializeField] private float _generationTime = 0.1f;
 
     private bool _isLoading;
     private int _visibleElementsCount;
     public int VisibleElementsCount { get { return _visibleElementsCount; } }
     private int _totalElementsCount;
+
+    [Header("Remove Elements")]
+    [SerializeField, Tooltip("The minimum distance from the viewport boundary at which an element should be disabled")] 
+    private float _disableOffset;
+    
+    [SerializeField, Tooltip("Minimum number of elements that must be instantiated before considering returning elements to the object pool")] 
+    private int _minAmountToStartDisable;
+
 
     private void Awake()
     {
@@ -153,8 +160,8 @@ public class InfiniteReusableScrollView : MonoBehaviour
     public void DisableFirstElementAboveViewport()
     {
         // Handle to starting to send elements to the pool when is more than disableStart
-        int disableStart = 20;
-        if (_totalElementsCount < disableStart) return;
+        _minAmountToStartDisable = 20;
+        if (_totalElementsCount < _minAmountToStartDisable) return;
 
         Vector3 topViewportEdge = _viewport.TransformPoint(new Vector3(0, _viewport.rect.yMax, 0));
 
@@ -176,8 +183,8 @@ public class InfiniteReusableScrollView : MonoBehaviour
     public void DisableFirstElementsBelowViewport()
     {
         // Handle to starting to send elements to the pool when is more than disableStart
-        int disableStart = 20;
-        if (_totalElementsCount < disableStart) return;
+        _minAmountToStartDisable = 20;
+        if (_totalElementsCount < _minAmountToStartDisable) return;
 
         Vector3 bottomViewportEdge = _viewport.TransformPoint(new Vector3(0, _viewport.rect.yMin, 0));
 
