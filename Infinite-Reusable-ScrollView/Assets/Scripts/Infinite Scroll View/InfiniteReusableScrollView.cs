@@ -10,6 +10,7 @@ public class InfiniteReusableScrollView : MonoBehaviour
     [Header("References")]
     [SerializeField] private RectTransform _elementPrefabRectTransform;
     [SerializeField] private DatabaseSO _dbElementName;
+    [SerializeField] private Animator pullToRequestAnimator;
 
     private ScrollRect _scrollRect;
     private RectTransform _viewport;
@@ -22,12 +23,17 @@ public class InfiniteReusableScrollView : MonoBehaviour
     [Header("Settings")]
     public bool isLoading;
     public bool isSendingToPool;
+    public bool isPullingElements;
     public float scrollThreshold = 0.95f;
     public int visibleElementsAmount;
 
     public int disableOffset;
 
     public float timeToGenerate;
+
+    public Vector2 contentPositionToStop;
+    public float contentInitialPosition;
+    public float distanceFromTop;
 
 
     private void Awake()
@@ -56,11 +62,15 @@ public class InfiniteReusableScrollView : MonoBehaviour
     {
         visibleElementsAmount = Mathf.CeilToInt(_viewport.rect.height / (_elementPrefabRectTransform.sizeDelta.y + _layoutGroup.spacing));
 
+        contentInitialPosition = _content.anchoredPosition.y;
+        contentPositionToStop = new Vector2(_scrollRect.content.anchoredPosition.x, contentInitialPosition - distanceFromTop);
+
+
         float timeToPopulate = 0.01f;
         StartCoroutine(PopulateScrollView(visibleElementsAmount, timeToPopulate));
     }
 
-    private IEnumerator PopulateScrollView(int amount, float timeToWait)
+    private IEnumerator PopulateScrollView(int amount, float timeToWait, bool spawnOnBottom = true)
     {
         TMP_Text elementTMP = null;
         isLoading = true;
@@ -76,7 +86,12 @@ public class InfiniteReusableScrollView : MonoBehaviour
             GameObject elementInstance = _scrollViewElementPool.GetObjectFromPool();
 
             elementInstance.transform.SetParent(_content);
-            elementInstance.transform.SetAsLastSibling();
+            
+            if(spawnOnBottom)
+                elementInstance.transform.SetAsLastSibling();
+            else
+                elementInstance.transform.SetAsFirstSibling();
+
 
             elementTMP = elementInstance.GetComponentInChildren<TMP_Text>();
 
@@ -95,11 +110,17 @@ public class InfiniteReusableScrollView : MonoBehaviour
         {
             StartCoroutine(PopulateScrollView(visibleElementsAmount, timeToGenerate));
         }
+
+        if(_scrollRect.verticalNormalizedPosition >= 1.1f && !isPullingElements)
+        {
+            StartCoroutine(PullToRequest());
+        }
     }
 
     public void DisableFirstElementAboveViewport()
     {
-        if (_handleScrollViewElement.VisibleElementCount < 20) return;
+        int startToDisable = 20;
+        if (_handleScrollViewElement.VisibleElementCount < startToDisable) return;
 
         Vector3 topViewportEdge = _viewport.TransformPoint(new Vector3(0, _viewport.rect.yMax, 0));
 
@@ -115,6 +136,24 @@ public class InfiniteReusableScrollView : MonoBehaviour
         }
     }
 
+    IEnumerator PullToRequest()
+    {
+        isPullingElements = true;
+        pullToRequestAnimator.gameObject.SetActive(true);
+        pullToRequestAnimator.enabled = true;
+        AnimatorStateInfo stateInfo = pullToRequestAnimator.GetCurrentAnimatorStateInfo(0);
+        _content.anchoredPosition = contentPositionToStop;
+        _scrollRect.enabled = false;
 
-  
+        yield return new WaitForSeconds(stateInfo.length);
+
+        _scrollRect.enabled = true;
+        pullToRequestAnimator.enabled = false;
+        pullToRequestAnimator.gameObject.SetActive(false);
+        isPullingElements = false;
+
+        StartCoroutine(PopulateScrollView(visibleElementsAmount, timeToGenerate, false));
+
+    }
+
 }
