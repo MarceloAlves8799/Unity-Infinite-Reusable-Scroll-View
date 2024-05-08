@@ -26,7 +26,12 @@ Você pode acompanhar todo o processo de commits do projeto, com descrições da
 
 5. Adicione como objeto filho do Infinite Reusable Scroll View, o prefab Object Pool, localizado na pasta Prefabs. No script ObjectPoll do elemento adicionado, trate de referênciar o prefab do ScrollView Element no campo Prefab To Instantiate.
 
+6. Você pode alterar a velocidade de animação de surgimento ou desaparecimento do ScrollView Element no script dentro do próprio Prefab, bastante alterar os valores em Spawn Animation Duration ou Despawn Animation Duration diretamente no prefab na pasta.
+
 ![image](https://github.com/MarceloAlves8799/Unity-Infinite-Reusable-Scroll-View/assets/48249122/ded51fd3-e430-4fdc-baf7-22c5ab69aa48)
+
+![image](https://github.com/MarceloAlves8799/Unity-Infinite-Reusable-Scroll-View/assets/48249122/f67d3fb1-1651-40ec-8459-7d72ce569f22)
+
 
 # Implementando o InfiniteReusableScrollView.cs
 1. Adicione o script InfiniteReusableScrollView.cs no game object pai Infinite Reusable Scroll View.
