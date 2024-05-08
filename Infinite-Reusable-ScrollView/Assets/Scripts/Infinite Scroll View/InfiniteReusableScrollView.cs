@@ -62,6 +62,8 @@ public class InfiniteReusableScrollView : MonoBehaviour
         if (_scrollViewElementPool == null)
             Debug.LogError($"You need a Object Pool reference as a child gameObject in {gameObject.name}");
 
+        // Calculate the number of visible elements based on viewport size
+        _visibleElementsCount = Mathf.CeilToInt(_viewport.rect.height / (_elementPrefabRectTransform.sizeDelta.y + _layoutGroup.spacing));
     }
 
     private void OnEnable()
@@ -71,8 +73,6 @@ public class InfiniteReusableScrollView : MonoBehaviour
 
     private void Start()
     {
-        // Calculate the number of visible elements based on viewport size
-        _visibleElementsCount = Mathf.CeilToInt(_viewport.rect.height / (_elementPrefabRectTransform.sizeDelta.y + _layoutGroup.spacing));
         int startVisibleElements = _visibleElementsCount * 3;
 
         // Populating the scroll view with the starter elements
@@ -100,6 +100,8 @@ public class InfiniteReusableScrollView : MonoBehaviour
         }
     }
 
+    #region Spawn Elements methods
+
     public void OnGenerateElementsOnTop(int amount)
     {
         StartCoroutine(PopulateScrollView(amount, _generationTime, false));
@@ -110,7 +112,6 @@ public class InfiniteReusableScrollView : MonoBehaviour
         StartCoroutine(PopulateScrollView(amount, _generationTime));
     }
 
-
     // Coroutine to handle populating the scroll view with elements 
     private IEnumerator PopulateScrollView(int amount, float timeToWait, bool spawnOnBottom = true)
     {
@@ -120,7 +121,11 @@ public class InfiniteReusableScrollView : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             _totalElementsCount++;
-            DisableFirstElementAboveViewport(); // Disable elements out the viewport each time that spawn a new element
+
+            if (spawnOnBottom)
+                DisableFirstElementAboveViewport(); 
+            else
+                DisableFirstElementsBelowViewport();
 
             yield return new WaitForSeconds(timeToWait);
 
@@ -141,6 +146,9 @@ public class InfiniteReusableScrollView : MonoBehaviour
         _isLoading = false;
     }
 
+    #endregion
+
+
     // Method to disable elements above the viewport
     public void DisableFirstElementAboveViewport()
     {
@@ -157,7 +165,30 @@ public class InfiniteReusableScrollView : MonoBehaviour
 
             if (childRect.position.y > topViewportEdge.y + _disableOffset)
             {
-                // _totalElementsCount--;
+                _totalElementsCount--;
+                _scrollViewElementPool.ReturnObjectToPool(child.gameObject);
+                break;
+            }
+        }
+    }
+
+    // Method to disable elements below the viewport
+    public void DisableFirstElementsBelowViewport()
+    {
+        // Handle to starting to send elements to the pool when is more than disableStart
+        int disableStart = 20;
+        if (_totalElementsCount < disableStart) return;
+
+        Vector3 bottomViewportEdge = _viewport.TransformPoint(new Vector3(0, _viewport.rect.yMin, 0));
+
+        // Send to pool elements below the viewport
+        foreach (Transform child in _content)
+        {
+            RectTransform childRect = child.GetComponent<RectTransform>();
+
+            if (childRect.position.y < bottomViewportEdge.y - _disableOffset)
+            {
+                _totalElementsCount--;
                 _scrollViewElementPool.ReturnObjectToPool(child.gameObject);
                 break;
             }
